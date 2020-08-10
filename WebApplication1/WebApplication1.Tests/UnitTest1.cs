@@ -14,17 +14,13 @@ namespace WebApplication1.Tests
         [Test]
         public async Task Async()
         {
-            var client = new ServiceStack.JsonServiceClient("http://localhost.fiddler:26311");
+            var client = new ServiceStack.JsonServiceClient("http://localhost:26311");
 
             var requests = new List<HelloAsync>
             {
                 new HelloAsync { Name = "roger" },
                 new HelloAsync { Name = "fred" },
             };
-
-            client.Proxy = new WebProxy("http://localhost:8888");
-
-            var t = requests.GetType().GetCollectionType();
 
             var response = await client.SendAllAsync<HelloResponse>(requests, CancellationToken.None).ConfigureAwait(false);
 
@@ -33,17 +29,13 @@ namespace WebApplication1.Tests
         [Test]
         public void Sync()
         {
-            var client = new ServiceStack.JsonServiceClient("http://localhost.fiddler:26311");
+            var client = new ServiceStack.JsonServiceClient("http://localhost:26311");
 
             var requests = new List<HelloSync>
             {
                 new HelloSync { Name = "roger" },
                 new HelloSync { Name = "fred" },
             };
-
-            client.Proxy = new WebProxy("http://localhost:8888");
-
-            var t = requests.GetType().GetCollectionType();
 
             var response = client.SendAll<HelloResponse>(requests);
         }
